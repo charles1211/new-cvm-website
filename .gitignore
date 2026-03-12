@@ -6,4 +6,5 @@ out/
 *.log
 .claude/
 docs/
+
 PRD.md
