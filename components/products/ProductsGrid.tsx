@@ -420,7 +420,7 @@ function ProductDetailModal({
   );
 }
 
-/* ── Featured Card ──────────────────────────────── */
+/* ── Featured Card (light bg) ───────────────────── */
 function FeaturedCard({
   product,
   onViewDetails,
@@ -434,199 +434,147 @@ function FeaturedCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 0, y: 32 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative rounded-2xl overflow-hidden"
-      style={{ background: "linear-gradient(145deg, #021628 0%, #042a4a 55%, #08477C 100%)" }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(8,71,124,0.13)] border border-slate-100 flex flex-col md:flex-row"
     >
-      {/* Dot grid */}
+      {/* LEFT — dark identity panel */}
       <div
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1.5px 1.5px, rgba(253,220,0,0.9) 1.5px, transparent 0)",
-          backgroundSize: "22px 22px",
-        }}
-      />
-      {/* Glows */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#FDDC00]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FDDC00]/18 transition-all duration-700" />
-      <div className="absolute bottom-0 left-0 w-80 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FDDC00]/70 to-transparent" />
-      {/* Ghost watermark */}
-      <div className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none select-none overflow-hidden">
-        <span className="text-[180px] md:text-[220px] font-black text-white/[0.025] leading-none pr-4">
-          {product.num}
-        </span>
-      </div>
+        className="relative md:w-[38%] flex-shrink-0 flex flex-col justify-between p-8 md:p-10 overflow-hidden"
+        style={{ background: "linear-gradient(155deg, #021628 0%, #08477C 100%)" }}
+      >
+        {/* Dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1.5px 1.5px, rgba(253,220,0,0.8) 1.5px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        {/* Yellow glow top-right */}
+        <div className="absolute top-0 right-0 w-56 h-56 bg-[#FDDC00]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FDDC00]/18 transition-all duration-700" />
+        {/* Ghost number */}
+        <div className="absolute bottom-0 right-0 pointer-events-none select-none overflow-hidden">
+          <span className="text-[130px] font-black text-white/[0.04] leading-none">{product.num}</span>
+        </div>
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FDDC00]/60 to-transparent" />
 
-      {/* Shimmer on hover */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none"
-        initial={{ x: "-100%" }}
-        whileHover={{ x: "100%" }}
-        transition={{ duration: 0.9, ease: "easeInOut" }}
-      />
-
-      <div className="relative z-10 flex flex-col md:flex-row gap-8 md:gap-12 p-8 md:p-10">
-
-        {/* Left: Icon cluster */}
-        <div className="flex flex-row md:flex-col items-center md:items-start gap-6 md:gap-6 md:w-56 flex-shrink-0">
-          {/* Badge */}
+        <div className="relative z-10">
+          {/* FEATURED badge */}
           <motion.span
-            initial={{ opacity: 0, scale: 0.8, y: -10 }}
-            animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 16 }}
-            className="inline-flex items-center gap-1.5 bg-[#FDDC00] text-[#08477C] text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-widest flex-shrink-0"
+            className="inline-flex items-center gap-1.5 bg-[#FDDC00] text-[#08477C] text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-widest mb-8"
           >
             <Star className="w-3 h-3" fill="currentColor" />
-            FEATURED
+            FEATURED PRODUCT
           </motion.span>
 
-          {/* Icon with animated rings */}
-          <div className="relative flex-shrink-0">
+          {/* Icon with rings */}
+          <div className="relative inline-flex mb-8">
             {[0, 1].map((i) => (
               <motion.div
                 key={i}
                 className="absolute rounded-3xl border border-[#FDDC00]/20 pointer-events-none"
                 style={{ inset: -(i + 1) * 10 }}
-                animate={{ scale: [1, 1.06 + i * 0.04, 1], opacity: [0.5, 0, 0.5] }}
-                transition={{
-                  duration: 2.5 + i * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.4,
-                }}
+                animate={{ scale: [1, 1.07 + i * 0.04, 1], opacity: [0.4, 0, 0.4] }}
+                transition={{ duration: 2.6 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
               />
             ))}
+            <div className="absolute inset-0 rounded-2xl blur-2xl scale-150 pointer-events-none" style={{ background: `${product.accentHex}35` }} />
             <div
-              className="absolute inset-0 rounded-2xl blur-2xl scale-150 pointer-events-none"
-              style={{ background: `${product.accentHex}30` }}
-            />
-            <div
-              className="relative w-24 h-24 rounded-2xl flex items-center justify-center shadow-[0_0_40px_rgba(253,220,0,0.25)]"
-              style={{
-                background: `${product.accentHex}15`,
-                border: `2px solid ${product.accentHex}35`,
-              }}
+              className="relative w-[88px] h-[88px] rounded-2xl flex items-center justify-center"
+              style={{ background: `${product.accentHex}18`, border: `2px solid ${product.accentHex}35` }}
             >
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Image
-                  src={product.icon}
-                  alt={product.name}
-                  width={58}
-                  height={58}
-                  className="object-contain drop-shadow-lg"
-                />
+                <Image src={product.icon} alt={product.name} width={56} height={56} className="object-contain drop-shadow-lg" />
               </motion.div>
             </div>
           </div>
-        </div>
 
-        {/* Right: Content */}
-        <div className="flex-1 flex flex-col">
-          {/* Category tag */}
           <span
-            className="inline-flex self-start text-[10px] font-extrabold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-4"
-            style={{
-              background: `${product.accentHex}15`,
-              border: `1px solid ${product.accentHex}30`,
-              color: product.accentHex,
-            }}
+            className="inline-block text-[10px] font-extrabold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full mb-3"
+            style={{ color: product.accentHex, background: `${product.accentHex}18`, border: `1px solid ${product.accentHex}30` }}
           >
             {product.category}
           </span>
+          <h3 className="text-white font-extrabold text-2xl md:text-3xl leading-tight mb-1.5">{product.name}</h3>
+          <p className="text-white/45 text-sm">{product.subtitle}</p>
+        </div>
 
-          <h3 className="text-white font-extrabold text-3xl md:text-4xl leading-tight mb-1.5">
-            {product.name}
-          </h3>
-          <p className="text-white/45 text-base mb-6">{product.subtitle}</p>
+        {/* Apply CTA */}
+        <Link
+          href="/contacts"
+          className="relative z-10 mt-8 flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm transition-all hover:brightness-110 active:scale-[0.98]"
+          style={{ background: product.accentHex, color: "#08477C" }}
+        >
+          <Phone className="w-4 h-4" />
+          Apply Now
+        </Link>
+      </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            {[
-              { icon: DollarSign, label: "Max Loanable", value: product.description1 },
-              { icon: Calendar, label: "Terms", value: product.description2 },
-              {
-                icon: Percent,
-                label: "Rate / month",
-                value: product.description3.replace(" per month", ""),
-              },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="flex flex-col gap-2 p-4 rounded-xl"
-                style={{
-                  background: `${product.accentHex}10`,
-                  border: `1px solid ${product.accentHex}20`,
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <div
-                    className="w-5 h-5 rounded-md flex items-center justify-center"
-                    style={{ background: `${product.accentHex}22` }}
-                  >
-                    <stat.icon className="w-3 h-3" style={{ color: product.accentHex }} />
-                  </div>
-                  <span className="text-white/35 text-[10px] font-medium leading-tight">
-                    {stat.label}
-                  </span>
+      {/* RIGHT — white content panel */}
+      <div className="flex-1 bg-white flex flex-col justify-between p-8 md:p-10">
+        {/* Stats grid */}
+        <div className="grid grid-cols-3 gap-4 mb-7">
+          {[
+            { icon: DollarSign, label: "Max Loanable", value: product.description1 },
+            { icon: Calendar, label: "Terms", value: product.description2 },
+            { icon: Percent, label: "Rate / month", value: product.description3.replace(" per month", "") },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col gap-2 p-4 rounded-xl border"
+              style={{ background: `${product.accentHex}07`, borderColor: `${product.accentHex}20` }}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${product.accentHex}18` }}>
+                  <stat.icon className="w-3 h-3" style={{ color: product.accentHex }} />
                 </div>
-                <span
-                  className="font-extrabold text-base leading-tight"
-                  style={{ color: product.accentHex }}
-                >
-                  {stat.value}
-                </span>
+                <span className="text-slate-400 text-[10px] font-medium leading-tight">{stat.label}</span>
+              </div>
+              <span className="font-extrabold text-base leading-tight text-[#08477C]">{stat.value}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Divider */}
+        <div className="h-px bg-slate-100 mb-6" />
+
+        {/* Qualification list */}
+        <div className="mb-7">
+          <p className="text-[10px] font-extrabold text-slate-400 tracking-[0.18em] uppercase mb-3">Who Can Apply</p>
+          <div className="space-y-2">
+            {["Government pensioners (GSIS/SSS)", "At least 60 years old", "Must have an active pension"].map((q) => (
+              <div key={q} className="flex items-center gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span className="text-slate-600 text-sm">{q}</span>
               </div>
             ))}
           </div>
-
-          {/* Qualification pills */}
-          <div className="hidden sm:flex flex-wrap gap-2 mb-6">
-            {["Government pensioners (GSIS/SSS)", "60 years old & above", "Active pension required"].map(
-              (q) => (
-                <span
-                  key={q}
-                  className="flex items-center gap-1.5 text-xs text-white/55 bg-white/[0.06] border border-white/[0.08] px-3 py-1.5 rounded-full"
-                >
-                  <CheckCircle2 className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                  {q}
-                </span>
-              )
-            )}
-          </div>
-
-          {/* CTAs */}
-          <div className="flex gap-3 mt-auto">
-            <Link
-              href="/contacts"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-[0_0_30px_rgba(253,220,0,0.2)]"
-              style={{ background: product.accentHex, color: "#08477C" }}
-            >
-              <Phone className="w-4 h-4" />
-              Apply Now
-            </Link>
-            <motion.button
-              whileHover={{ x: 3 }}
-              onClick={onViewDetails}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-white/60 border border-white/15 hover:bg-white/10 hover:text-white hover:border-white/25 transition-all duration-200"
-            >
-              View Requirements
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          </div>
         </div>
+
+        {/* View requirements CTA */}
+        <motion.button
+          whileHover={{ x: 4 }}
+          onClick={onViewDetails}
+          className="self-start flex items-center gap-2 text-[#08477C] font-bold text-sm hover:text-[#063a66] transition-colors"
+        >
+          View Full Requirements
+          <ArrowRight className="w-4 h-4" />
+        </motion.button>
       </div>
     </motion.div>
   );
 }
 
-/* ── Regular Product Card ────────────────────────── */
+/* ── Regular Product Card (light bg) ────────────── */
 function ProductCard({
   product,
   index,
@@ -643,132 +591,79 @@ function ProductCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 0, y: 32 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       style={{ rotateX, rotateY, transformPerspective: 700 }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group relative rounded-2xl overflow-hidden flex flex-col cursor-default"
+      className="group relative bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col cursor-default shadow-[0_4px_20px_rgba(8,71,124,0.07)] hover:shadow-[0_12px_40px_rgba(8,71,124,0.14)] transition-shadow duration-300"
     >
-      {/* Card background */}
+      {/* Colored top accent bar */}
+      <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${product.accentHex}, ${product.accentHex}80)` }} />
+
+      {/* Hover tint overlay */}
       <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(145deg, #021628 0%, #042840 55%, #08477C 100%)" }}
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
+        style={{ background: `${product.accentHex}04` }}
       />
-      {/* Accent glow sphere */}
-      <div
-        className="absolute -top-10 -right-10 w-48 h-48 rounded-full blur-3xl opacity-25 group-hover:opacity-45 transition-opacity duration-500 pointer-events-none"
-        style={{ background: product.accentHex }}
-      />
-      {/* Bottom glow */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 opacity-10 pointer-events-none"
-        style={{ background: `linear-gradient(to top, ${product.accentHex}, transparent)` }}
-      />
-      {/* Dot grid */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1.5px 1.5px, white 1.5px, transparent 0)",
-          backgroundSize: "20px 20px",
-        }}
-      />
-      {/* Top accent border */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px] opacity-60 pointer-events-none transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: `linear-gradient(90deg, transparent, ${product.accentHex}, transparent)` }}
-      />
+
       {/* Ghost number watermark */}
-      <div className="absolute bottom-3 right-4 pointer-events-none select-none">
-        <span className="text-[64px] font-black text-white/[0.04] leading-none">
+      <div className="absolute bottom-2 right-3 pointer-events-none select-none">
+        <span className="text-[64px] font-black leading-none" style={{ color: `${product.accentHex}08` }}>
           {product.num}
         </span>
       </div>
-      {/* Shimmer on hover */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      />
 
-      {/* Card content */}
       <div className="relative z-10 flex flex-col flex-1 p-6">
 
-        {/* Top row: badge + category */}
+        {/* Top: category + badge */}
         <div className="flex items-center justify-between mb-6">
           <span
             className="text-[10px] font-extrabold tracking-[0.18em] uppercase px-2.5 py-1 rounded-full"
-            style={{
-              color: product.accentHex,
-              background: `${product.accentHex}18`,
-              border: `1px solid ${product.accentHex}30`,
-            }}
+            style={{ color: product.accentHex, background: `${product.accentHex}12`, border: `1px solid ${product.accentHex}25` }}
           >
             {product.category}
           </span>
           {product.badge && product.badge !== "FEATURED" && (
-            <span
-              className="text-[9px] font-extrabold tracking-widest uppercase px-2.5 py-1 rounded-full border border-white/15 text-white/50"
-            >
+            <span className="text-[9px] font-extrabold tracking-widest uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-400">
               {product.badge}
             </span>
           )}
         </div>
 
         {/* Icon */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-5">
           <div className="relative">
-            {/* Outer pulse ring */}
             <motion.div
               className="absolute rounded-2xl border pointer-events-none"
-              style={{
-                inset: -10,
-                borderColor: `${product.accentHex}25`,
-              }}
-              animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0, 0.5] }}
+              style={{ inset: -8, borderColor: `${product.accentHex}20` }}
+              animate={{ scale: [1, 1.1, 1], opacity: [0.6, 0, 0.6] }}
               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             />
-            {/* Glow */}
             <div
-              className="absolute inset-0 rounded-2xl blur-xl scale-150 pointer-events-none transition-opacity duration-300 group-hover:opacity-80"
-              style={{ background: `${product.accentHex}25`, opacity: 0.5 }}
+              className="absolute inset-0 rounded-2xl blur-xl scale-150 pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity duration-300"
+              style={{ background: `${product.accentHex}30` }}
             />
             <motion.div
               animate={{ y: [0, -4, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-[72px] h-[72px] rounded-2xl flex items-center justify-center shadow-lg"
-              style={{
-                background: `${product.accentHex}15`,
-                border: `1.5px solid ${product.accentHex}30`,
-              }}
+              className="relative w-[68px] h-[68px] rounded-2xl flex items-center justify-center shadow-md"
+              style={{ background: `${product.accentHex}12`, border: `1.5px solid ${product.accentHex}25` }}
             >
-              <Image
-                src={product.icon}
-                alt={product.name}
-                width={44}
-                height={44}
-                className="object-contain drop-shadow-lg"
-              />
+              <Image src={product.icon} alt={product.name} width={42} height={42} className="object-contain drop-shadow" />
             </motion.div>
           </div>
         </div>
 
         {/* Name + subtitle */}
         <div className="text-center mb-5">
-          <h3 className="font-extrabold text-white text-lg leading-tight mb-1 group-hover:text-white transition-colors">
-            {product.name}
-          </h3>
-          <p className="text-white/40 text-xs">{product.subtitle}</p>
+          <h3 className="font-extrabold text-[#08477C] text-lg leading-tight mb-1">{product.name}</h3>
+          <p className="text-slate-400 text-xs">{product.subtitle}</p>
         </div>
 
         {/* Stats */}
-        <div
-          className="rounded-xl p-3 mb-5 space-y-2"
-          style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
+        <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3 mb-5 space-y-2">
           {[
             { icon: DollarSign, label: "Max Loanable", value: product.description1 },
             { icon: Calendar, label: "Terms", value: product.description2 },
@@ -776,20 +671,12 @@ function ProductCard({
           ].map((stat) => (
             <div key={stat.label} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div
-                  className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
-                  style={{ background: `${product.accentHex}18` }}
-                >
+                <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0" style={{ background: `${product.accentHex}15` }}>
                   <stat.icon className="w-2.5 h-2.5" style={{ color: product.accentHex }} />
                 </div>
-                <span className="text-white/30 text-[10px]">{stat.label}</span>
+                <span className="text-slate-400 text-[10px]">{stat.label}</span>
               </div>
-              <span
-                className="font-bold text-xs"
-                style={{ color: product.accentHex }}
-              >
-                {stat.value}
-              </span>
+              <span className="font-bold text-xs text-[#08477C]">{stat.value}</span>
             </div>
           ))}
         </div>
@@ -800,15 +687,14 @@ function ProductCard({
         <div className="flex flex-col gap-2">
           <Link
             href="/contacts"
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
-            style={{ background: product.accentHex, color: "#08477C" }}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm text-white bg-[#08477C] hover:bg-[#063a66] transition-colors active:scale-[0.98]"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             Inquire Now
           </Link>
           <button
             onClick={onViewDetails}
-            className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-semibold text-sm text-white/50 border border-white/[0.10] hover:bg-white/[0.07] hover:text-white/80 hover:border-white/20 transition-all duration-200 group/btn"
+            className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-semibold text-sm text-slate-500 border border-slate-200 hover:border-[#08477C]/30 hover:text-[#08477C] hover:bg-[#08477C]/[0.04] transition-all duration-200 group/btn"
           >
             View Requirements
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
@@ -819,7 +705,7 @@ function ProductCard({
   );
 }
 
-/* ── Category Filter ────────────────────────────── */
+/* ── Category Filter (light bg) ─────────────────── */
 function CategoryFilter({
   active,
   onChange,
@@ -846,20 +732,16 @@ function CategoryFilter({
             onClick={() => onChange(cat)}
             className="relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200"
             style={{
-              color: isActive ? "#FDDC00" : "rgba(255,255,255,0.45)",
-              background: isActive
-                ? "rgba(253,220,0,0.12)"
-                : "rgba(255,255,255,0.05)",
-              border: isActive
-                ? "1px solid rgba(253,220,0,0.3)"
-                : "1px solid rgba(255,255,255,0.08)",
+              color: isActive ? "#ffffff" : "#64748b",
+              background: isActive ? "#08477C" : "#ffffff",
+              border: isActive ? "1px solid #08477C" : "1px solid #e2e8f0",
+              boxShadow: isActive ? "0 4px 16px rgba(8,71,124,0.25)" : "0 1px 4px rgba(0,0,0,0.06)",
             }}
           >
             {isActive && (
               <motion.span
-                layoutId="filterGlow"
-                className="absolute inset-0 rounded-full"
-                style={{ background: "rgba(253,220,0,0.06)" }}
+                layoutId="filterActive"
+                className="absolute inset-0 rounded-full bg-[#08477C]"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
@@ -867,8 +749,8 @@ function CategoryFilter({
             <span
               className="relative text-[10px] font-extrabold px-1.5 py-0.5 rounded-full"
               style={{
-                background: isActive ? "rgba(253,220,0,0.2)" : "rgba(255,255,255,0.08)",
-                color: isActive ? "#FDDC00" : "rgba(255,255,255,0.3)",
+                background: isActive ? "rgba(255,255,255,0.2)" : "#f1f5f9",
+                color: isActive ? "#ffffff" : "#64748b",
               }}
             >
               {counts[cat]}
@@ -885,18 +767,14 @@ export default function ProductsGrid() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [activeCategory, setActiveCategory] = useState<Category>("All");
 
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
-
   const enabled = products.filter((p) => p.isEnabled);
   const featuredProduct = enabled.find((p) => p.badge === "FEATURED");
 
-  /* Decide which products show as regular cards */
   const regularProducts =
     activeCategory === "All"
       ? enabled.filter((p) => p.badge !== "FEATURED")
       : activeCategory === "Pension"
-        ? [] // featured card handles pension
+        ? []
         : enabled.filter((p) => p.category === activeCategory);
 
   const showFeatured =
@@ -905,23 +783,29 @@ export default function ProductsGrid() {
 
   return (
     <>
-      <section className="py-20 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #080E1A 0%, #0A1628 60%, #061223 100%)" }}>
-        {/* Global ambient glows */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#08477C]/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[#FDDC00]/[0.06] rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-blue-600/[0.08] rounded-full blur-3xl pointer-events-none" />
+      <section className="py-5 bg-[#F8FAFC] relative overflow-hidden">
+        {/* Subtle ambient glows */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#08477C]/[0.04] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#FDDC00]/[0.05] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-          {/* ── Category filter ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-10"
-          >
-            <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
-          </motion.div>
+
+          <div className="text-center mb-10">
+            {/* ── Category filter ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="mb-10"
+            >
+              <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
+            </motion.div>
+          </div>
+
+
+
 
           {/* ── Products ── */}
           <AnimatePresence mode="wait">
@@ -945,10 +829,10 @@ export default function ProductsGrid() {
               {regularProducts.length > 0 && (
                 <div
                   className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${regularProducts.length === 3
-                      ? "xl:grid-cols-3"
-                      : regularProducts.length === 2
-                        ? "xl:grid-cols-2"
-                        : "xl:grid-cols-3"
+                    ? "xl:grid-cols-3"
+                    : regularProducts.length === 2
+                      ? "xl:grid-cols-2"
+                      : "xl:grid-cols-3"
                     }`}
                 >
                   {regularProducts.map((product, i) => (
@@ -972,13 +856,12 @@ export default function ProductsGrid() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="mt-14 text-center"
           >
-            <p className="text-white/35 text-sm mb-5">
+            <p className="text-slate-400 text-sm mb-5">
               Not sure which product is right for you?
             </p>
             <Link
               href="/contacts"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-bold text-[#08477C] text-sm hover:brightness-105 active:scale-[0.98] transition-all duration-200 shadow-[0_0_40px_rgba(253,220,0,0.2)]"
-              style={{ background: "linear-gradient(135deg, #FDDC00 0%, #f0ce00 100%)" }}
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-bold text-white text-sm bg-[#08477C] hover:bg-[#063a66] active:scale-[0.98] transition-all duration-200 shadow-[0_4px_24px_rgba(8,71,124,0.25)]"
             >
               <MessageSquare className="w-4 h-4" />
               Talk to Our Team
