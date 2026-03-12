@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version)",
+      "Bash(npm install next@14.2.29 eslint-config-next@14.2.29)",
+      "Bash(npm install next@14.2.29 eslint-config-next@14.2.29 --legacy-peer-deps)",
+      "Bash(npm run build)",
+      "Bash(netstat -ano)"
+    ]
+  }
+}
