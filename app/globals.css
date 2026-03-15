@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Move reCAPTCHA v3 badge to bottom-left */
+/* reCAPTCHA v3 badge — bottom-left, hidden by default, shows on form interaction */
 .grecaptcha-badge {
-  left: 14px !important;
-  right: auto !important;
+  right: 14px !important;
+  left: auto !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+body.recaptcha-visible .grecaptcha-badge {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 @layer base {

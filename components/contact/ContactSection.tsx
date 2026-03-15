@@ -341,6 +341,21 @@ function ContactSidebar() {
 }
 
 /* ── Main export ── */
+function useRecaptchaBadge() {
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const show = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    document.body.classList.add("recaptcha-visible");
+  };
+  const hide = (delay = 3000) => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => {
+      document.body.classList.remove("recaptcha-visible");
+    }, delay);
+  };
+  return { show, hide };
+}
+
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -348,6 +363,7 @@ export default function ContactSection() {
   const [selectedType, setSelectedType] = useState("");
   const formRef = useRef<HTMLDivElement>(null);
   const isFormInView = useInView(formRef, { once: true, margin: "-60px" });
+  const { show: showBadge, hide: hideBadge } = useRecaptchaBadge();
 
   const {
     register,
@@ -366,6 +382,7 @@ export default function ContactSection() {
   const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
     setSubmitError(null);
+    showBadge();
     try {
       const token = await executeRecaptcha("contact_form");
       const res = await fetch("/api/contact", {
@@ -380,9 +397,11 @@ export default function ContactSection() {
       setSubmitted(true);
       reset();
       setSelectedType("");
+      hideBadge(3000);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
       setSubmitError(msg);
+      hideBadge(5000);
     } finally {
       setSubmitting(false);
     }
@@ -532,6 +551,8 @@ export default function ContactSection() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onSubmit={handleSubmit(onSubmit)}
+                    onFocus={showBadge}
+                    onBlur={() => hideBadge(2000)}
                     className="p-7 space-y-8"
                   >
                     {/* Step 1: Inquiry Type */}
