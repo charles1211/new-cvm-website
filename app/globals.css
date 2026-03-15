@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Move reCAPTCHA v3 badge to bottom-left */
+.grecaptcha-badge {
+  left: 14px !important;
+  right: auto !important;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
