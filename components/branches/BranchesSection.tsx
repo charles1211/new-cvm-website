@@ -2,22 +2,24 @@
 import { useState, useMemo } from "react";
 import { Search, MapPin, Phone, Facebook, Map, X, Building2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import SectionReveal from "@/components/shared/SectionReveal";
 
 const branches = [
-  { id: 1, name: "MAIN BRANCH", location: "San Pablo City, Laguna", mobileNo: "0917-123-4567", telNo: "(049) 501-0900", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 2, name: "STA. CRUZ", location: "Sta. Cruz, Laguna", mobileNo: "0917-123-4568", telNo: "(049) 501-0901", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 3, name: "CALAMBA", location: "Calamba City, Laguna", mobileNo: "0917-123-4569", telNo: "(049) 501-0902", googleMapUrl: "https://maps.google.com", faceBookUrl: null },
-  { id: 4, name: "LOS BAÑOS", location: "Los Baños, Laguna", mobileNo: "0917-123-4570", telNo: "(049) 501-0903", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 5, name: "BI–ÑAN", location: "Biñan City, Laguna", mobileNo: "0917-123-4571", telNo: "(049) 501-0904", googleMapUrl: "https://maps.google.com", faceBookUrl: null },
-  { id: 6, name: "CABUYAO", location: "Cabuyao City, Laguna", mobileNo: "0917-123-4572", telNo: "(049) 501-0905", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 7, name: "LIPA CITY", location: "Lipa City, Batangas", mobileNo: "0917-123-4573", telNo: "(043) 501-0906", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 8, name: "BATANGAS CITY", location: "Batangas City, Batangas", mobileNo: "0917-123-4574", telNo: "(043) 501-0907", googleMapUrl: "https://maps.google.com", faceBookUrl: null },
-  { id: 9, name: "LUCENA", location: "Lucena City, Quezon", mobileNo: "0917-123-4575", telNo: "(042) 501-0908", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 10, name: "ANTIPOLO", location: "Antipolo City, Rizal", mobileNo: "0917-123-4576", telNo: "(02) 501-0909", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
-  { id: 11, name: "CAINTA", location: "Cainta, Rizal", mobileNo: "0917-123-4577", telNo: "(02) 501-0910", googleMapUrl: "https://maps.google.com", faceBookUrl: null },
-  { id: 12, name: "TAYTAY", location: "Taytay, Rizal", mobileNo: "0917-123-4578", telNo: "(02) 501-0911", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit" },
+  { id: 1,  name: "MAIN BRANCH",    location: "San Pablo City, Laguna",   mobileNo: "0917-123-4567", telNo: "(049) 501-0900", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-1/480/180" },
+  { id: 2,  name: "STA. CRUZ",      location: "Sta. Cruz, Laguna",        mobileNo: "0917-123-4568", telNo: "(049) 501-0901", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-2/480/180" },
+  { id: 3,  name: "CALAMBA",        location: "Calamba City, Laguna",     mobileNo: "0917-123-4569", telNo: "(049) 501-0902", googleMapUrl: "https://maps.google.com", faceBookUrl: null,                                         image: "https://picsum.photos/seed/branch-3/480/180" },
+  { id: 4,  name: "LOS BAÑOS",      location: "Los Baños, Laguna",        mobileNo: "0917-123-4570", telNo: "(049) 501-0903", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-4/480/180" },
+  { id: 5,  name: "BI–ÑAN",         location: "Biñan City, Laguna",       mobileNo: "0917-123-4571", telNo: "(049) 501-0904", googleMapUrl: "https://maps.google.com", faceBookUrl: null,                                         image: "https://picsum.photos/seed/branch-5/480/180" },
+  { id: 6,  name: "CABUYAO",        location: "Cabuyao City, Laguna",     mobileNo: "0917-123-4572", telNo: "(049) 501-0905", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-6/480/180" },
+  { id: 7,  name: "LIPA CITY",      location: "Lipa City, Batangas",      mobileNo: "0917-123-4573", telNo: "(043) 501-0906", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-7/480/180" },
+  { id: 8,  name: "BATANGAS CITY",  location: "Batangas City, Batangas",  mobileNo: "0917-123-4574", telNo: "(043) 501-0907", googleMapUrl: "https://maps.google.com", faceBookUrl: null,                                         image: "https://picsum.photos/seed/branch-8/480/180" },
+  { id: 9,  name: "LUCENA",         location: "Lucena City, Quezon",      mobileNo: "0917-123-4575", telNo: "(042) 501-0908", googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-9/480/180" },
+  { id: 10, name: "ANTIPOLO",       location: "Antipolo City, Rizal",     mobileNo: "0917-123-4576", telNo: "(02) 501-0909",  googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-10/480/180" },
+  { id: 11, name: "CAINTA",         location: "Cainta, Rizal",            mobileNo: "0917-123-4577", telNo: "(02) 501-0910",  googleMapUrl: "https://maps.google.com", faceBookUrl: null,                                         image: "https://picsum.photos/seed/branch-11/480/180" },
+  { id: 12, name: "TAYTAY",         location: "Taytay, Rizal",            mobileNo: "0917-123-4578", telNo: "(02) 501-0911",  googleMapUrl: "https://maps.google.com", faceBookUrl: "https://www.facebook.com/cvmfinancecredit", image: "https://picsum.photos/seed/branch-12/480/180" },
 ];
+
 
 export default function BranchesSection() {
   const [search, setSearch] = useState("");
@@ -39,7 +41,6 @@ export default function BranchesSection() {
         {/* ── Search + Stats bar ── */}
         <SectionReveal className="mb-10">
           <div className="max-w-2xl mx-auto">
-            {/* Search input */}
             <div className="relative mb-4">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
               <input
@@ -49,7 +50,6 @@ export default function BranchesSection() {
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full h-14 pl-12 pr-12 rounded-2xl border-2 border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#08477C] focus:ring-4 focus:ring-[#08477C]/10 transition-all duration-200 text-sm shadow-sm"
               />
-              {/* Clear button */}
               <AnimatePresence>
                 {search && (
                   <motion.button
@@ -67,7 +67,6 @@ export default function BranchesSection() {
               </AnimatePresence>
             </div>
 
-            {/* Result count */}
             <div className="flex items-center justify-center gap-2">
               <Building2 className="w-3.5 h-3.5 text-slate-400" />
               <p className="text-slate-500 text-sm">
@@ -97,82 +96,77 @@ export default function BranchesSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.35, delay: Math.min(i * 0.05, 0.25), ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -4 }}
                 className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-[0_12px_40px_rgba(8,71,124,0.12)] hover:border-slate-200 transition-all duration-300 flex flex-col"
               >
-                {/* ── Card Header — branded dark zone ── */}
-                <div className="relative bg-gradient-to-br from-[#08477C] to-[#031D33] px-5 pt-5 pb-6 overflow-hidden">
-                  {/* Dot grid texture */}
-                  <div
-                    className="absolute inset-0 opacity-[0.06] pointer-events-none"
-                    style={{
-                      backgroundImage: "radial-gradient(circle at 1.5px 1.5px, white 1.5px, transparent 0)",
-                      backgroundSize: "20px 20px",
-                    }}
+                {/* ── Banner image ── */}
+                <div className="relative h-[180px] overflow-hidden flex-shrink-0">
+                  <Image
+                    src={branch.image}
+                    alt={`${branch.name} branch`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  {/* Giant decorative pin */}
-                  <MapPin className="absolute -bottom-3 -right-3 w-24 h-24 text-white/[0.05] pointer-events-none" />
-                  {/* Subtle yellow glow */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#FDDC00]/[0.08] rounded-full blur-2xl pointer-events-none" />
+                  {/* dark overlay for text legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                  {/* Branch index pill */}
-                  <div className="absolute top-4 right-4 w-7 h-7 bg-white/[0.10] border border-white/[0.12] rounded-full flex items-center justify-center text-white/50 text-[10px] font-bold">
-                    {branch.id}
+                  {/* branch id badge — top right */}
+                  <div className="absolute top-3 right-3 px-2 py-0.5 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full text-white text-[10px] font-bold">
+                    #{branch.id}
                   </div>
 
-                  {/* Content */}
-                  <div className="relative z-10">
-                    <span className="text-[#FDDC00] text-[10px] font-extrabold tracking-[0.22em] uppercase mb-2.5 block">
-                      CVM Finance
-                    </span>
-                    <h3 className="text-white font-extrabold text-xl leading-tight mb-3">
-                      {branch.name}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-white/55 text-xs">
-                      <MapPin className="w-3 h-3 text-[#FDDC00] flex-shrink-0" />
-                      {branch.location}
-                    </div>
+                  {/* CVM label — top left */}
+                  <span className="absolute top-3 left-3 text-[#FDDC00] text-[9px] font-extrabold tracking-[0.2em] uppercase drop-shadow">
+                    CVM Finance
+                  </span>
+
+                </div>
+
+                {/* ── Name + location ── */}
+                <div className="pt-4 pb-4 px-5 text-center">
+                  <h3 className="font-extrabold text-[#08477C] text-lg leading-tight mb-1">
+                    {branch.name}
+                  </h3>
+                  <div className="flex items-center justify-center gap-1 text-slate-400 text-xs">
+                    <MapPin className="w-3 h-3 text-[#08477C]/40 flex-shrink-0" />
+                    {branch.location}
                   </div>
                 </div>
 
                 {/* ── Card Body ── */}
-                <div className="p-5 flex flex-col flex-1">
+                <div className="px-5 pb-5 flex flex-col flex-1">
+                  <div className="h-px bg-slate-100 mb-4" />
 
-                  {/* Phone numbers */}
-                  <div className="space-y-2 mb-5">
+                  {/* Phone numbers — compact inline rows */}
+                  <div className="space-y-1 mb-4">
                     {branch.mobileNo && (
                       <a
                         href={`tel:${branch.mobileNo.replace(/\D/g, "")}`}
-                        className="group/phone flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#08477C]/[0.05] transition-colors"
+                        className="group/phone flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-[#08477C]/[0.05] transition-colors"
                       >
-                        <span className="w-7 h-7 bg-[#08477C]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover/phone:bg-[#08477C]/20 transition-colors">
-                          <Phone className="w-3.5 h-3.5 text-[#08477C]" />
-                        </span>
-                        <div>
-                          <p className="text-[10px] text-slate-400 font-medium leading-none mb-0.5">Mobile</p>
-                          <p className="text-slate-700 text-sm font-semibold group-hover/phone:text-[#08477C] transition-colors">{branch.mobileNo}</p>
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-3 h-3 text-[#08477C]/60 flex-shrink-0" />
+                          <span className="text-[10px] text-slate-400 font-medium">Mobile</span>
                         </div>
+                        <span className="text-slate-700 text-xs font-semibold group-hover/phone:text-[#08477C] transition-colors">{branch.mobileNo}</span>
                       </a>
                     )}
                     {branch.telNo && (
                       <a
                         href={`tel:${branch.telNo.replace(/\D/g, "")}`}
-                        className="group/phone flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#08477C]/[0.05] transition-colors"
+                        className="group/phone flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-[#08477C]/[0.05] transition-colors"
                       >
-                        <span className="w-7 h-7 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover/phone:bg-[#08477C]/10 transition-colors">
-                          <Phone className="w-3.5 h-3.5 text-slate-400 group-hover/phone:text-[#08477C] transition-colors" />
-                        </span>
-                        <div>
-                          <p className="text-[10px] text-slate-400 font-medium leading-none mb-0.5">Landline</p>
-                          <p className="text-slate-600 text-sm font-semibold group-hover/phone:text-[#08477C] transition-colors">{branch.telNo}</p>
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-3 h-3 text-slate-300 flex-shrink-0" />
+                          <span className="text-[10px] text-slate-400 font-medium">Landline</span>
                         </div>
+                        <span className="text-slate-600 text-xs font-semibold group-hover/phone:text-[#08477C] transition-colors">{branch.telNo}</span>
                       </a>
                     )}
                   </div>
 
                   <div className="flex-1" />
-
-                  {/* Divider */}
                   <div className="h-px bg-slate-100 mb-4" />
 
                   {/* Action buttons */}

@@ -6,6 +6,8 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.blob.core.windows.net' },
       { protocol: 'https', hostname: 'logo.clearbit.com' },
       { protocol: 'https', hostname: 'randomuser.me' },
+      { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'https', hostname: 'fastly.picsum.photos' },
     ],
   },
 };

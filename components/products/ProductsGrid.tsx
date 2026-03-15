@@ -461,20 +461,22 @@ function FeaturedCard({
         {/* Top accent line */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FDDC00]/60 to-transparent" />
 
-        <div className="relative z-10">
+        <div className="relative z-10 flex flex-col">
           {/* FEATURED badge */}
-          <motion.span
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 16 }}
-            className="inline-flex items-center gap-1.5 bg-[#FDDC00] text-[#08477C] text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-widest mb-8"
-          >
-            <Star className="w-3 h-3" fill="currentColor" />
-            FEATURED PRODUCT
-          </motion.span>
+          <div className="mb-7">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 16 }}
+              className="inline-flex items-center gap-1.5 bg-[#FDDC00] text-[#08477C] text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-widest"
+            >
+              <Star className="w-3 h-3" fill="currentColor" />
+              FEATURED PRODUCT
+            </motion.span>
+          </div>
 
           {/* Icon with rings */}
-          <div className="relative inline-flex mb-8">
+          <div className="relative w-fit mb-7">
             {[0, 1].map((i) => (
               <motion.div
                 key={i}
@@ -498,14 +500,19 @@ function FeaturedCard({
             </div>
           </div>
 
-          <span
-            className="inline-block text-[10px] font-extrabold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full mb-3"
-            style={{ color: product.accentHex, background: `${product.accentHex}18`, border: `1px solid ${product.accentHex}30` }}
-          >
-            {product.category}
-          </span>
-          <h3 className="text-white font-extrabold text-2xl md:text-3xl leading-tight mb-1.5">{product.name}</h3>
-          <p className="text-white/45 text-sm">{product.subtitle}</p>
+          {/* Category + title + subtitle */}
+          <div>
+            <div className="mb-3">
+              <span
+                className="inline-flex text-[10px] font-extrabold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full"
+                style={{ color: product.accentHex, background: `${product.accentHex}18`, border: `1px solid ${product.accentHex}30` }}
+              >
+                {product.category}
+              </span>
+            </div>
+            <h3 className="text-white font-extrabold text-2xl md:text-3xl leading-tight mb-1.5">{product.name}</h3>
+            <p className="text-white/45 text-sm">{product.subtitle}</p>
+          </div>
         </div>
 
         {/* Apply CTA */}

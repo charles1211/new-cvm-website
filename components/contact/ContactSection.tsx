@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import { executeRecaptcha } from "@/lib/recaptcha";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -362,17 +363,26 @@ export default function ContactSection() {
 
   const agreeToTerms = watch("agreeToTerms");
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onSubmit = async (_data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const token = await executeRecaptcha("contact_form");
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, age: Number(data.age), recaptchaToken: token }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Submission failed");
+      }
       setSubmitted(true);
       reset();
       setSelectedType("");
-    } catch {
-      setSubmitError("Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setSubmitError(msg);
     } finally {
       setSubmitting(false);
     }

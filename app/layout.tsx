@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
@@ -36,6 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>{children}</main>
         <Footer />
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
