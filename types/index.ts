@@ -69,3 +69,23 @@ export interface PaymentFormData {
   amount: number;
   noEmail: boolean;
 }
+
+export interface AdminProduct {
+  id: number;
+  name: string;
+  subtitle: string;
+  category: "Pension" | "Employment" | "Collateral";
+  badge: "FEATURED" | "NEW" | "";
+  num: string;
+  isEnabled: boolean;
+  description1: string;
+  description2: string;
+  description3: string;
+  imagePath: string;
+  accentHex: string;
+  extendedProperties: {
+    "Who are Qualified": string[];
+    Requirements: string[];
+    "Loan Details"?: string[];
+  };
+}
