@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Product ──────────────────────────────────────────────────
+enum ProductCategory {
+  Pension
+  Employment
+  Collateral
+}
+
+enum ProductBadge {
+  FEATURED
+  NEW
+  NONE
+}
+
+model Product {
+  id                 Int             @id @default(autoincrement())
+  name               String          @db.VarChar(255)
+  subtitle           String?         @db.VarChar(255)
+  category           ProductCategory @default(Pension)
+  badge              ProductBadge    @default(NONE)
+  num                String          @db.VarChar(10)
+  isEnabled          Boolean         @default(true)
+  description1       String?         @db.VarChar(255)
+  description2       String?         @db.VarChar(255)
+  description3       String?         @db.VarChar(255)
+  imagePath          String          @db.VarChar(500)
+  accentHex          String          @default("#08477C") @db.VarChar(7)
+  extendedProperties Json            @default("{}")
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@map("products")
+}
+
+// ─── Branch ───────────────────────────────────────────────────
+model Branch {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  location     String   @db.VarChar(500)
+  mobileNo     String   @db.VarChar(20)
+  telNo        String   @db.VarChar(20)
+  imagePath    String   @db.VarChar(500)
+  googleMapUrl String?  @db.VarChar(1000)
+  faceBookUrl  String?  @db.VarChar(500)
+  isEnabled    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("branches")
+}
+
+// ─── Information ──────────────────────────────────────────────
+model Information {
+  id        Int      @id @default(autoincrement())
+  type      String   @db.VarChar(100)
+  name      String   @db.VarChar(255)
+  url       String?  @db.VarChar(1000)
+  value     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("informations")
+}
+
+// ─── PaymentMethod ────────────────────────────────────────────
+model PaymentMethod {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  type      String   @db.VarChar(100)
+  imgurl    String   @db.VarChar(500)
+  pChannel  String   @db.VarChar(100)
+  pMethod   String   @db.VarChar(100)
+  order     Int      @default(0)
+  isEnabled Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payment_methods")
+}
+
+// ─── ContactInquiry ───────────────────────────────────────────
+model ContactInquiry {
+  id           Int      @id @default(autoincrement())
+  type         String   @db.VarChar(100)
+  name         String   @db.VarChar(255)
+  address      String   @db.VarChar(500)
+  age          Int
+  mobileNo     String   @db.VarChar(20)
+  email        String   @db.VarChar(255)
+  loanInquiry  String   @db.Text
+  message      String   @db.Text
+  agreeToTerms Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@map("contact_inquiries")
+}
+
+// ─── Admin ────────────────────────────────────────────────────
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
