@@ -7,6 +7,7 @@ import WhyChooseCVM from "@/components/home/WhyChooseCVM";
 import PaymentPartners from "@/components/home/PaymentPartners";
 import Testimonials from "@/components/home/Testimonials";
 import NewsSection from "@/components/home/NewsSection";
+import SocialHighlights from "@/components/home/SocialHighlights";
 import CTABanner from "@/components/home/CTABanner";
 import type { Metadata } from "next";
 
@@ -28,6 +29,7 @@ export default function HomePage() {
       <PaymentPartners />
       <Testimonials />
       <NewsSection />
+      <SocialHighlights />
       <CTABanner />
     </>
   );
