@@ -6,6 +6,8 @@ import { z } from "zod";
 import { Eye, EyeOff, Lock, User, LogIn } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { setToken } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -18,16 +20,31 @@ const loginSchema = z.object({
 type LoginData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = async (data: LoginData) => {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setLoading(false);
-    // In production: authenticate and redirect
-    console.log("Login:", data);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+      if (!res.ok) throw new Error("Invalid credentials");
+      const { token } = await res.json();
+      setToken(token);
+      router.push("/admin/products");
+    } catch {
+      setError("root", { message: "Invalid username or password" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,6 +98,9 @@ export default function LoginPage() {
               </div>
               {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
             </div>
+            {errors.root && (
+              <p className="text-red-500 text-xs text-center -mt-2">{errors.root.message}</p>
+            )}
             <Button type="submit" size="lg" className="w-full gap-2" disabled={loading}>
               {loading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <LogIn className="w-4 h-4" />}
               {loading ? "Signing in..." : "Sign In"}

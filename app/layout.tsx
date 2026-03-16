@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { PublicLayout } from "@/components/layout/PublicLayout";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -20,9 +19,7 @@ export const metadata: Metadata = {
   description:
     "CVM Finance and Credit Corporation — SEC Registered, BSP Supervised. Offering pension loans, private teacher loans, sangla ORCR, sangla titulo across 56+ branches in the Philippines.",
   keywords: ["CVM Finance", "loan Philippines", "pension loan", "sangla ORCR", "sangla titulo", "lending"],
-  icons: {
-    icon: "/cvmlogo.ico",
-  },
+  icons: { icon: "/cvmlogo.ico" },
   openGraph: {
     siteName: "CVM Finance and Credit Corporation",
     locale: "en_PH",
@@ -34,9 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <PublicLayout>{children}</PublicLayout>
         <Script
           src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
           strategy="afterInteractive"
