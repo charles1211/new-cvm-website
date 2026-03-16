@@ -13,9 +13,9 @@ const slides = [
     subtitle: "Fast, reliable, and accessible loans for every Filipino.",
     cta: { label: "View Products", href: "/products" },
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&q=80",
-    overlayFrom: "from-[#08477C]/90",
-    overlayVia: "via-[#08477C]/65",
-    overlayTo: "to-[#031D33]/50",
+    overlayFrom: "from-[#031D33]/90",
+    overlayVia: "via-[#08477C]/60",
+    overlayTo: "to-[#FDDC00]/20",
   },
   {
     id: 2,
@@ -23,9 +23,9 @@ const slides = [
     subtitle: "Get an instant estimate of your loan amount and monthly payments with our easy calculator.",
     cta: { label: "Try Calculator", href: "/loan-calculator" },
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80",
-    overlayFrom: "from-[#063963]/90",
-    overlayVia: "via-[#08477C]/65",
-    overlayTo: "to-[#0a5a96]/40",
+    overlayFrom: "from-[#031D33]/90",
+    overlayVia: "via-[#08477C]/60",
+    overlayTo: "to-[#FDDC00]/20",
   },
   {
     id: 3,
@@ -34,8 +34,8 @@ const slides = [
     cta: { label: "Find a Branch", href: "/branches" },
     image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&q=80",
     overlayFrom: "from-[#031D33]/90",
-    overlayVia: "via-[#08477C]/70",
-    overlayTo: "to-[#0d5fa3]/40",
+    overlayVia: "via-[#08477C]/60",
+    overlayTo: "to-[#FDDC00]/20",
   },
 ];
 
@@ -92,19 +92,25 @@ export default function HeroCarousel() {
       <div className="overflow-hidden h-full" ref={emblaRef}>
         <div className="flex h-full">
           {slides.map((slide, i) => (
-            <div key={slide.id} className="relative flex-[0_0_100%] h-full bg-[#08477C]">
-              {/* Background image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            <div key={slide.id} className="relative flex-[0_0_100%] h-full bg-[#08477C] overflow-hidden">
+              {/* Background image — Ken Burns zoom + pan */}
+              <motion.div
+                className="absolute inset-[-8%] bg-cover bg-center bg-no-repeat will-change-transform"
                 style={{ backgroundImage: `url('${slide.image}')` }}
+                animate={
+                  selected === i
+                    ? { scale: [1.08, 1.18], x: ["-1%", "1%"], y: ["0%", "-1%"] }
+                    : { scale: 1.08, x: "-1%", y: "0%" }
+                }
+                transition={{ duration: 8, ease: "linear" }}
               />
-              {/* Gradient overlay */}
+              {/* Gradient overlay — richer blend */}
               <div className={`absolute inset-0 bg-gradient-to-r ${slide.overlayFrom} ${slide.overlayVia} ${slide.overlayTo}`} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#031D33]/70 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#031D33]/90 via-[#031D33]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#031D33]/40 via-transparent to-transparent" />
               {/* Grid texture */}
               <div
-                className="absolute inset-0 opacity-[0.06]"
+                className="absolute inset-0 opacity-[0.05]"
                 style={{
                   backgroundImage:
                     "linear-gradient(rgba(255,220,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,220,0,1) 1px, transparent 1px)",
@@ -123,6 +129,14 @@ export default function HeroCarousel() {
                       initial={{ opacity: 0, y: 50 }}
                       animate={selected === i ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 0.9, ease: [0.21, 0.47, 0.32, 0.98] }}
+                      className="relative p-8 md:p-10 rounded-2xl"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(3,29,51,0.70) 0%, rgba(8,71,124,0.35) 70%, rgba(253,220,0,0.06) 100%)",
+                        backdropFilter: "blur(14px)",
+                        WebkitBackdropFilter: "blur(14px)",
+                        border: "1px solid rgba(253,220,0,0.12)",
+                        boxShadow: "0 8px 48px rgba(3,29,51,0.5), inset 0 1px 0 rgba(253,220,0,0.07)",
+                      }}
                     >
                       {/* ── ISO 9001:2015 Badge — Outstanding ── */}
                       <div className="flex items-center gap-3 mb-7">
