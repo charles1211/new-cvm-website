@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Youtube, Facebook, ExternalLink, Play, Users, Bell } from "lucide-react";
+import { Youtube, Facebook, ExternalLink, Users, Bell } from "lucide-react";
 
 /* ── replace IDs / URLs / counts with real data ── */
 const YOUTUBE_VIDEOS = [
